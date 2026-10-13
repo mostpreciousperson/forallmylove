@@ -159,7 +159,7 @@
       50% { transform: translateY(-8px); }
     }
 
-    /* --- FLOATING SIDE PHOTOS --- */
+    /* --- FLOATING SIDE PHOTOS (FLY FROM CENTER) --- */
     .side-photo {
       position: absolute;
       width: 100px;
@@ -171,8 +171,12 @@
       z-index: 0;
       pointer-events: none;
       opacity: 0;
-      transform: translateY(-20px) scale(0.9);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      /* Initial state: center screen */
+      top: 40vh !important;
+      left: 50% !important;
+      right: auto !important;
+      transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
+      transition: all 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -180,7 +184,6 @@
 
     .side-photo.show-photo {
       opacity: 0.88;
-      transform: translateY(0) scale(1);
     }
 
     .side-photo img {
@@ -190,39 +193,39 @@
       border-radius: 6px;
     }
 
-    /* Desktop Positions */
+    /* Desktop Final Flying Target Positions */
     @media (min-width: 1025px) {
       .side-photo {
         width: 130px;
         height: 160px;
       }
-      .photo-1 { top: 120px; left: 2%; transform: rotate(-8deg); }
-      .photo-2 { top: 600px; left: 2%; transform: rotate(6deg); }
-      .photo-5 { top: 1100px; left: 2%; transform: rotate(-5deg); }
-      .photo-6 { top: 1600px; left: 2%; transform: rotate(7deg); }
+      .photo-1.show-photo { top: 120px !important; left: 2% !important; transform: translate(0, 0) rotate(-8deg); }
+      .photo-2.show-photo { top: 600px !important; left: 2% !important; transform: translate(0, 0) rotate(6deg); }
+      .photo-5.show-photo { top: 1100px !important; left: 2% !important; transform: translate(0, 0) rotate(-5deg); }
+      .photo-6.show-photo { top: 1600px !important; left: 2% !important; transform: translate(0, 0) rotate(7deg); }
 
-      .photo-3 { top: 220px; right: 2%; transform: rotate(7deg); }
-      .photo-4 { top: 700px; right: 2%; transform: rotate(-6deg); }
-      .photo-7 { top: 1200px; right: 2%; transform: rotate(5deg); }
-      .photo-8 { top: 1700px; right: 2%; transform: rotate(-7deg); }
+      .photo-3.show-photo { top: 220px !important; left: auto !important; right: 2% !important; transform: translate(0, 0) rotate(7deg); }
+      .photo-4.show-photo { top: 700px !important; left: auto !important; right: 2% !important; transform: translate(0, 0) rotate(-6deg); }
+      .photo-7.show-photo { top: 1200px !important; left: auto !important; right: 2% !important; transform: translate(0, 0) rotate(5deg); }
+      .photo-8.show-photo { top: 1700px !important; left: auto !important; right: 2% !important; transform: translate(0, 0) rotate(-7deg); }
     }
 
-    /* Mobile Phone Positions */
+    /* Mobile Phone Final Flying Target Positions */
     @media (max-width: 1024px) {
       .side-photo {
         width: 82px;
         height: 102px;
         padding: 4px 4px 12px 4px;
       }
-      .photo-1 { top: 110px; left: -8px; transform: rotate(-12deg); }
-      .photo-2 { top: 750px; left: -10px; transform: rotate(8deg); }
-      .photo-5 { top: 1400px; left: -8px; transform: rotate(-6deg); }
-      .photo-6 { top: 2050px; left: -6px; transform: rotate(10deg); }
+      .photo-1.show-photo { top: 110px !important; left: -8px !important; transform: translate(0, 0) rotate(-12deg); }
+      .photo-2.show-photo { top: 750px !important; left: -10px !important; transform: translate(0, 0) rotate(8deg); }
+      .photo-5.show-photo { top: 1400px !important; left: -8px !important; transform: translate(0, 0) rotate(-6deg); }
+      .photo-6.show-photo { top: 2050px !important; left: -6px !important; transform: translate(0, 0) rotate(10deg); }
 
-      .photo-3 { top: 400px; right: -8px; transform: rotate(10deg); }
-      .photo-4 { top: 1050px; right: -10px; transform: rotate(-8deg); }
-      .photo-7 { top: 1700px; right: -8px; transform: rotate(6deg); }
-      .photo-8 { top: 2350px; right: -6px; transform: rotate(-10deg); }
+      .photo-3.show-photo { top: 400px !important; left: auto !important; right: -8px !important; transform: translate(0, 0) rotate(10deg); }
+      .photo-4.show-photo { top: 1050px !important; left: auto !important; right: -10px !important; transform: translate(0, 0) rotate(-8deg); }
+      .photo-7.show-photo { top: 1700px !important; left: auto !important; right: -8px !important; transform: translate(0, 0) rotate(6deg); }
+      .photo-8.show-photo { top: 2350px !important; left: auto !important; right: -6px !important; transform: translate(0, 0) rotate(-10deg); }
     }
 
     /* Floating background hearts */
@@ -823,7 +826,7 @@
       container.appendChild(cardEl);
     });
 
-    // Opening Intro Animation: Photos FIRST one by one, then Cards SECOND
+    // Opening Intro Animation: Photos fly OUT from center FIRST, then Cards reveal
     openIntroBtn.addEventListener('click', (e) => {
       const rect = openIntroBtn.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
@@ -840,21 +843,21 @@
         musicIcon.textContent = "🎶";
       }).catch((err) => console.log("Audio playback error: ", err));
 
-      // 1st: Reveal side photos ONE BY ONE
+      // 1st: Photos burst/fly OUT from center one by one
       const sidePhotos = document.querySelectorAll('.side-photo');
       sidePhotos.forEach((photo, index) => {
         setTimeout(() => {
           photo.classList.add('show-photo');
-        }, 300 + (index * 160)); // Staggered photo drop in
+        }, 200 + (index * 130)); // Staggered explosion outward from center
       });
 
-      // 2nd: Reveal envelope cards AFTER photos finish appearing
+      // 2nd: Cards reveal smoothly AFTER photo burst completes
       const cards = document.querySelectorAll('.card');
-      const photoDuration = 300 + (sidePhotos.length * 160);
+      const photoBurstDuration = 200 + (sidePhotos.length * 130) + 300;
       cards.forEach((card, index) => {
         setTimeout(() => {
           card.classList.add('appear');
-        }, photoDuration + (index * 55));
+        }, photoBurstDuration + (index * 50));
       });
     });
 
