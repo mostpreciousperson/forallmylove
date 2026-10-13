@@ -159,7 +159,7 @@
       50% { transform: translateY(-8px); }
     }
 
-    /* --- FLOATING SIDE PHOTOS (FLY FROM CENTER) --- */
+    /* --- FLOATING SIDE PHOTOS (START AT CENTER, FLY OUT ONE BY ONE) --- */
     .side-photo {
       position: absolute;
       width: 100px;
@@ -171,12 +171,11 @@
       z-index: 0;
       pointer-events: none;
       opacity: 0;
-      /* Initial state: center screen */
       top: 40vh !important;
       left: 50% !important;
       right: auto !important;
       transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
-      transition: all 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: all 0.85s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -193,39 +192,39 @@
       border-radius: 6px;
     }
 
-    /* Desktop Final Flying Target Positions */
+    /* Desktop Positions */
     @media (min-width: 1025px) {
       .side-photo {
         width: 130px;
         height: 160px;
       }
       .photo-1.show-photo { top: 120px !important; left: 2% !important; transform: translate(0, 0) rotate(-8deg); }
-      .photo-2.show-photo { top: 600px !important; left: 2% !important; transform: translate(0, 0) rotate(6deg); }
-      .photo-5.show-photo { top: 1100px !important; left: 2% !important; transform: translate(0, 0) rotate(-5deg); }
-      .photo-6.show-photo { top: 1600px !important; left: 2% !important; transform: translate(0, 0) rotate(7deg); }
+      .photo-2.show-photo { top: 450px !important; left: 2% !important; transform: translate(0, 0) rotate(6deg); }
+      .photo-5.show-photo { top: 780px !important; left: 2% !important; transform: translate(0, 0) rotate(-5deg); }
+      .photo-6.show-photo { top: 1110px !important; left: 2% !important; transform: translate(0, 0) rotate(7deg); }
 
       .photo-3.show-photo { top: 220px !important; left: auto !important; right: 2% !important; transform: translate(0, 0) rotate(7deg); }
-      .photo-4.show-photo { top: 700px !important; left: auto !important; right: 2% !important; transform: translate(0, 0) rotate(-6deg); }
-      .photo-7.show-photo { top: 1200px !important; left: auto !important; right: 2% !important; transform: translate(0, 0) rotate(5deg); }
-      .photo-8.show-photo { top: 1700px !important; left: auto !important; right: 2% !important; transform: translate(0, 0) rotate(-7deg); }
+      .photo-4.show-photo { top: 550px !important; left: auto !important; right: 2% !important; transform: translate(0, 0) rotate(-6deg); }
+      .photo-7.show-photo { top: 880px !important; left: auto !important; right: 2% !important; transform: translate(0, 0) rotate(5deg); }
+      .photo-8.show-photo { top: 1210px !important; left: auto !important; right: 2% !important; transform: translate(0, 0) rotate(-7deg); }
     }
 
-    /* Mobile Phone Final Flying Target Positions */
+    /* Mobile Phone Positions (Cozy & Close Spacing) */
     @media (max-width: 1024px) {
       .side-photo {
-        width: 82px;
-        height: 102px;
+        width: 80px;
+        height: 100px;
         padding: 4px 4px 12px 4px;
       }
-      .photo-1.show-photo { top: 110px !important; left: -8px !important; transform: translate(0, 0) rotate(-12deg); }
-      .photo-2.show-photo { top: 750px !important; left: -10px !important; transform: translate(0, 0) rotate(8deg); }
-      .photo-5.show-photo { top: 1400px !important; left: -8px !important; transform: translate(0, 0) rotate(-6deg); }
-      .photo-6.show-photo { top: 2050px !important; left: -6px !important; transform: translate(0, 0) rotate(10deg); }
+      .photo-1.show-photo { top: 100px !important; left: 6px !important; transform: translate(0, 0) rotate(-10deg); }
+      .photo-2.show-photo { top: 400px !important; left: 6px !important; transform: translate(0, 0) rotate(8deg); }
+      .photo-5.show-photo { top: 700px !important; left: 6px !important; transform: translate(0, 0) rotate(-6deg); }
+      .photo-6.show-photo { top: 1000px !important; left: 6px !important; transform: translate(0, 0) rotate(9deg); }
 
-      .photo-3.show-photo { top: 400px !important; left: auto !important; right: -8px !important; transform: translate(0, 0) rotate(10deg); }
-      .photo-4.show-photo { top: 1050px !important; left: auto !important; right: -10px !important; transform: translate(0, 0) rotate(-8deg); }
-      .photo-7.show-photo { top: 1700px !important; left: auto !important; right: -8px !important; transform: translate(0, 0) rotate(6deg); }
-      .photo-8.show-photo { top: 2350px !important; left: auto !important; right: -6px !important; transform: translate(0, 0) rotate(-10deg); }
+      .photo-3.show-photo { top: 250px !important; left: auto !important; right: 6px !important; transform: translate(0, 0) rotate(10deg); }
+      .photo-4.show-photo { top: 550px !important; left: auto !important; right: 6px !important; transform: translate(0, 0) rotate(-8deg); }
+      .photo-7.show-photo { top: 850px !important; left: auto !important; right: 6px !important; transform: translate(0, 0) rotate(6deg); }
+      .photo-8.show-photo { top: 1150px !important; left: auto !important; right: 6px !important; transform: translate(0, 0) rotate(-9deg); }
     }
 
     /* Floating background hearts */
@@ -826,12 +825,13 @@
       container.appendChild(cardEl);
     });
 
-    // Opening Intro Animation: Photos fly OUT from center FIRST, then Cards reveal
+    // Opening Sequence: 1. Heart Flood -> 2. Photos Reveal One By One from Center -> 3. Cards Reveal
     openIntroBtn.addEventListener('click', (e) => {
       const rect = openIntroBtn.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
 
+      // STEP 1: Heart flood on screen
       floodHeartsOnOpening(centerX, centerY);
 
       introOverlay.classList.add('hidden');
@@ -843,21 +843,21 @@
         musicIcon.textContent = "🎶";
       }).catch((err) => console.log("Audio playback error: ", err));
 
-      // 1st: Photos burst/fly OUT from center one by one
+      // STEP 2: Photos reveal from center ONE BY ONE
       const sidePhotos = document.querySelectorAll('.side-photo');
       sidePhotos.forEach((photo, index) => {
         setTimeout(() => {
           photo.classList.add('show-photo');
-        }, 200 + (index * 130)); // Staggered explosion outward from center
+        }, 250 + (index * 160)); // 1st photo, 2nd photo, 3rd photo sequence...
       });
 
-      // 2nd: Cards reveal smoothly AFTER photo burst completes
+      // STEP 3: Envelope cards reveal AFTER photos finish flying out
       const cards = document.querySelectorAll('.card');
-      const photoBurstDuration = 200 + (sidePhotos.length * 130) + 300;
+      const photoSequenceDuration = 250 + (sidePhotos.length * 160) + 300;
       cards.forEach((card, index) => {
         setTimeout(() => {
           card.classList.add('appear');
-        }, photoBurstDuration + (index * 50));
+        }, photoSequenceDuration + (index * 45));
       });
     });
 
