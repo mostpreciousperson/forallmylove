@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HAPPY BIRTHDAYYY! 🎂💌</title>
+  <title>HAPPY BIRTHDAY! 🎂💌</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap');
 
@@ -66,12 +66,12 @@
 
     .intro-title {
       font-family: var(--font-title);
-      font-size: 2.8rem;
+      font-size: 2.5rem;
       color: #d85a8a;
       margin-bottom: 1.5rem;
       text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.9);
       animation: pulseTitle 2s infinite ease-in-out;
-      line-height: 1.2;
+      line-height: 1.25;
     }
 
     @keyframes pulseTitle {
@@ -113,10 +113,10 @@
     /* --- FLOATING SIDE PHOTOS --- */
     .side-photo {
       position: fixed;
-      width: 140px;
-      height: 170px;
+      width: 130px;
+      height: 160px;
       background: #ffffff;
-      padding: 8px 8px 25px 8px;
+      padding: 6px 6px 20px 6px;
       border-radius: 12px;
       box-shadow: 0 10px 25px rgba(216, 90, 138, 0.18);
       z-index: 0;
@@ -139,10 +139,17 @@
       border-radius: 6px;
     }
 
-    .photo-1 { top: 12%; left: 2%; transform: rotate(-8deg); animation: floatSide1 6s infinite ease-in-out; }
-    .photo-2 { top: 55%; left: 2%; transform: rotate(6deg); animation: floatSide2 7s infinite ease-in-out; }
-    .photo-3 { top: 15%; right: 2%; transform: rotate(7deg); animation: floatSide2 6.5s infinite ease-in-out; }
-    .photo-4 { top: 58%; right: 2%; transform: rotate(-6deg); animation: floatSide1 7.5s infinite ease-in-out; }
+    /* Left Side Photos */
+    .photo-1 { top: 6%; left: 2%; transform: rotate(-8deg); animation: floatSide1 6s infinite ease-in-out; }
+    .photo-2 { top: 29%; left: 2%; transform: rotate(6deg); animation: floatSide2 7s infinite ease-in-out; }
+    .photo-5 { top: 52%; left: 2%; transform: rotate(-5deg); animation: floatSide1 6.8s infinite ease-in-out; }
+    .photo-6 { top: 75%; left: 2%; transform: rotate(7deg); animation: floatSide2 7.2s infinite ease-in-out; }
+
+    /* Right Side Photos */
+    .photo-3 { top: 8%; right: 2%; transform: rotate(7deg); animation: floatSide2 6.5s infinite ease-in-out; }
+    .photo-4 { top: 31%; right: 2%; transform: rotate(-6deg); animation: floatSide1 7.5s infinite ease-in-out; }
+    .photo-7 { top: 54%; right: 2%; transform: rotate(5deg); animation: floatSide2 6.3s infinite ease-in-out; }
+    .photo-8 { top: 77%; right: 2%; transform: rotate(-7deg); animation: floatSide1 7s infinite ease-in-out; }
 
     @keyframes floatSide1 {
       0%, 100% { transform: translateY(0) rotate(-6deg); }
@@ -417,7 +424,7 @@
 
   <!-- BIRTHDAY INTRO SCREEN -->
   <div class="intro-overlay" id="intro-overlay">
-    <div class="intro-title">HAPPY BIRTHDAYYY!!!!!!!!<br>ITS YOUR DAY!!!!!!! 🎂✨</div>
+    <div class="intro-title">HAPPY BIRTHDAY TO THE MOST PRECIOUS ONE! 🎂✨</div>
     <div class="big-envelope" id="open-intro-btn">✉️</div>
     <div class="click-hint">Click the envelope to open your present~ 💕</div>
   </div>
@@ -429,11 +436,24 @@
   <div class="side-photo photo-2">
     <img src="https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/2.jpg" alt="Memory 2">
   </div>
+  <div class="side-photo photo-5">
+    <img src="https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/5.jpg" alt="Memory 5">
+  </div>
+  <div class="side-photo photo-6">
+    <img src="https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/6.jpg" alt="Memory 6">
+  </div>
+
   <div class="side-photo photo-3">
     <img src="https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/3.jpg" alt="Memory 3">
   </div>
   <div class="side-photo photo-4">
     <img src="https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/4.jpg" alt="Memory 4">
+  </div>
+  <div class="side-photo photo-7">
+    <img src="https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/7.jpg" alt="Memory 7">
+  </div>
+  <div class="side-photo photo-8">
+    <img src="https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/8.jpg" alt="Memory 8">
   </div>
 
   <!-- Background Floating Hearts -->
@@ -601,10 +621,12 @@
     const openIntroBtn = document.getElementById('open-intro-btn');
     let isPlaying = false;
 
-    // Playlist Configuration
+    // 4 Song Playlist Configuration
     const playlist = [
       { name: "sunkissed", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/sunkissed.mp3" },
-      { name: "Those Eyes", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/Those%20Eyes.mp3" }
+      { name: "Those Eyes", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/Those%20Eyes.mp3" },
+      { name: "We Fall in Love", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/We%20Fall%20in%20Love.mp3" },
+      { name: "I'm Dreaming of You", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/I'm%20Dreaming%20of%20You.mp3" }
     ];
     let currentTrack = 0;
 
@@ -613,7 +635,7 @@
       musicText.textContent = playlist[index].name;
     }
 
-    // Auto-advance to "Those Eyes" when "sunkissed" ends (and loop back)
+    // Auto-advance through all 4 songs in sequence (and loop back)
     bgMusic.addEventListener('ended', () => {
       currentTrack = (currentTrack + 1) % playlist.length;
       loadTrack(currentTrack);
