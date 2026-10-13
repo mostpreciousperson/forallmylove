@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>For My Favorite Person 💌</title>
+  <title>HAPPY BIRTHDAYYY! 🎂💌</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap');
 
     :root {
       --bg-gradient: linear-gradient(135deg, #fff0f3 0%, #ffe3e8 40%, #f7d6e0 70%, #f2c6de 100%);
       --card-bg: rgba(255, 255, 255, 0.65);
-      --card-hover: rgba(255, 255, 255, 0.85);
+      --card-hover: rgba(255, 255, 255, 0.88);
       --accent-color: #ff9ebb;
       --accent-dark: #e86a92;
       --text-main: #6b5262;
@@ -38,7 +38,78 @@
       overflow-x: hidden;
     }
 
-    /* Soft floating background hearts */
+    /* --- BIRTHDAY INTRO OVERLAY --- */
+    .intro-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #ffe3e8 0%, #f7d6e0 50%, #f2c6de 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      text-align: center;
+      padding: 1.5rem;
+      transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s;
+    }
+
+    .intro-overlay.hidden {
+      opacity: 0;
+      transform: scale(1.05);
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .intro-title {
+      font-family: var(--font-title);
+      font-size: 2.8rem;
+      color: #d85a8a;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.9);
+      animation: pulseTitle 2s infinite ease-in-out;
+      line-height: 1.2;
+    }
+
+    @keyframes pulseTitle {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+
+    .big-envelope {
+      font-size: 6rem;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 1.5rem 2.5rem;
+      border-radius: 35px;
+      box-shadow: 0 15px 35px rgba(232, 106, 146, 0.25);
+      border: 2px solid #ffffff;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      user-select: none;
+    }
+
+    .big-envelope:hover {
+      transform: scale(1.1) rotate(-3deg);
+      background: #ffffff;
+      box-shadow: 0 20px 40px rgba(232, 106, 146, 0.35);
+    }
+
+    .click-hint {
+      margin-top: 1.5rem;
+      font-size: 1.1rem;
+      color: var(--accent-dark);
+      font-weight: 700;
+      animation: bounce 1.5s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* Floating background elements */
     .bg-hearts {
       position: fixed;
       top: 0;
@@ -68,6 +139,14 @@
       margin-bottom: 2.5rem;
       position: relative;
       z-index: 1;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease 0.2s;
+    }
+
+    body.started header {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     header h1 {
@@ -105,6 +184,11 @@
       gap: 0.5rem;
       cursor: pointer;
       transition: all 0.3s ease;
+      opacity: 0;
+    }
+
+    body.started .music-badge {
+      opacity: 1;
     }
 
     .music-badge:hover {
@@ -112,6 +196,7 @@
       background: #ffffff;
     }
 
+    /* Grid & Staggered Cards Reveal */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -129,16 +214,25 @@
       padding: 1.6rem 1.4rem;
       border: 1.5px solid rgba(255, 255, 255, 0.8);
       box-shadow: 0 10px 25px rgba(244, 180, 202, 0.2);
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.3s, box-shadow 0.3s, opacity 0.6s ease, filter 0.6s ease;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       min-height: 120px;
+      opacity: 0;
+      transform: translateY(30px);
+      filter: blur(4px);
+    }
+
+    .card.appear {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
     }
 
     .card:hover {
-      transform: translateY(-6px) scale(1.02);
+      transform: translateY(-6px) scale(1.02) !important;
       background: var(--card-hover);
       box-shadow: 0 15px 30px rgba(232, 106, 146, 0.25);
       border-color: rgba(255, 255, 255, 1);
@@ -177,7 +271,7 @@
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.35s ease;
-      z-index: 1000;
+      z-index: 3000;
       padding: 1.2rem;
     }
 
@@ -252,10 +346,23 @@
       text-align: center;
       position: relative;
       z-index: 1;
+      opacity: 0;
+      transition: opacity 1s ease 1s;
+    }
+
+    body.started footer {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
+
+  <!-- BIRTHDAY INTRO SCREEN -->
+  <div class="intro-overlay" id="intro-overlay">
+    <div class="intro-title">HAPPY BIRTHDAYYY!!!!!!!!<br>ITS YOUR DAY!!!!!!! 🎂✨</div>
+    <div class="big-envelope" id="open-intro-btn">✉️</div>
+    <div class="click-hint">Click the envelope to open your present~ 💕</div>
+  </div>
 
   <!-- Background Floating Hearts -->
   <div class="bg-hearts">
@@ -273,7 +380,7 @@
 
   <!-- Music Status Badge -->
   <div class="music-badge" id="music-btn">
-    <span id="music-icon">🎵</span> <span id="music-text">sunkissed ~ khai dreams</span>
+    <span id="music-icon">🎶</span> <span id="music-text">sunkissed ~ khai dreams</span>
   </div>
 
   <header>
@@ -310,7 +417,7 @@
         message: "I know. Some days feel like too much, and all you want is to just reach out and touch puppy close. I feel it too.\n\nBut remember this, distance only measures certain space, not how close our hearts are. Every single day that passes is one day closer to the moment I get to wrap my arms around you and never let go. Hang in there with me, okay? We are building something beautiful together. We would be okay, angel baby."
       },
       {
-        title: "4. Open when... you can't sleep and it’s late at night",
+        title: "4. Open when... you can'sleep and it’s late at night",
         message: "Hey sleepyhead, why are you still awake? Come snuggle back to pupppyyyy!\n\nPut your phone down after reading this, close your eyes, and think about us sitting under a quiet night sky with no noise around us. Imagine my hand softly stroking your hair until you drift off. Just warm warm hugs and pets coming onto your way. You can breathe, let go of all the thoughts running through your mind. I’ll be right here, things will be alright, precious. Take care and rest well, my treasure."
       },
       {
@@ -419,34 +526,11 @@
     const bgMusic = document.getElementById('bg-music');
     const musicBtn = document.getElementById('music-btn');
     const musicIcon = document.getElementById('music-icon');
+    const introOverlay = document.getElementById('intro-overlay');
+    const openIntroBtn = document.getElementById('open-intro-btn');
     let isPlaying = false;
 
-    // Start music on first click anywhere on page
-    function startAudioOnInteraction() {
-      if (!isPlaying) {
-        bgMusic.play().then(() => {
-          isPlaying = true;
-          musicIcon.textContent = "🎶";
-        }).catch(() => {});
-      }
-      document.removeEventListener('click', startAudioOnInteraction);
-    }
-    document.addEventListener('click', startAudioOnInteraction);
-
-    // Toggle Music manually via badge
-    musicBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (isPlaying) {
-        bgMusic.pause();
-        musicIcon.textContent = "⏸️";
-      } else {
-        bgMusic.play();
-        musicIcon.textContent = "🎶";
-      }
-      isPlaying = !isPlaying;
-    });
-
-    // Generate Envelope Cards
+    // Create cards in DOM
     cardsData.forEach((card) => {
       const cardEl = document.createElement('div');
       cardEl.className = 'card';
@@ -464,6 +548,39 @@
       });
 
       container.appendChild(cardEl);
+    });
+
+    // Opening Intro Animation
+    openIntroBtn.addEventListener('click', () => {
+      introOverlay.classList.add('hidden');
+      document.body.classList.add('started');
+
+      // Play music
+      bgMusic.play().then(() => {
+        isPlaying = true;
+        musicIcon.textContent = "🎶";
+      }).catch(() => {});
+
+      // Slowly reveal cards one by one
+      const cards = document.querySelectorAll('.card');
+      cards.forEach((card, index) => {
+        setTimeout(() => {
+          card.classList.add('appear');
+        }, 300 + (index * 70)); // staggered delay per card
+      });
+    });
+
+    // Toggle Music manually via badge
+    musicBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isPlaying) {
+        bgMusic.pause();
+        musicIcon.textContent = "⏸️";
+      } else {
+        bgMusic.play();
+        musicIcon.textContent = "🎶";
+      }
+      isPlaying = !isPlaying;
     });
 
     closeBtn.addEventListener('click', () => {
