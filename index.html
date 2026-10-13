@@ -9,8 +9,8 @@
 
     :root {
       --bg-gradient: linear-gradient(135deg, #fff0f3 0%, #ffe3e8 40%, #f7d6e0 70%, #f2c6de 100%);
-      --card-bg: rgba(255, 255, 255, 0.76);
-      --card-hover: rgba(255, 255, 255, 0.94);
+      --card-bg: rgba(255, 255, 255, 0.78);
+      --card-hover: rgba(255, 255, 255, 0.95);
       --accent-color: #ff9ebb;
       --accent-dark: #e86a92;
       --text-main: #6b5262;
@@ -159,7 +159,7 @@
       50% { transform: translateY(-8px); }
     }
 
-    /* --- FLOATING SIDE PHOTOS (START AT CENTER, FLY OUT ONE BY ONE) --- */
+    /* --- FLOATING SIDE PHOTOS --- */
     .side-photo {
       position: absolute;
       width: 100px;
@@ -209,7 +209,7 @@
       .photo-8.show-photo { top: 1210px !important; left: auto !important; right: 2% !important; transform: translate(0, 0) rotate(-7deg); }
     }
 
-    /* Mobile Phone Positions (Cozy & Close Spacing) */
+    /* Mobile Phone Positions */
     @media (max-width: 1024px) {
       .side-photo {
         width: 80px;
@@ -227,7 +227,7 @@
       .photo-8.show-photo { top: 1150px !important; left: auto !important; right: 6px !important; transform: translate(0, 0) rotate(-9deg); }
     }
 
-    /* Floating background hearts */
+    /* Background Floating Hearts */
     .bg-hearts {
       position: fixed;
       top: 0;
@@ -302,10 +302,18 @@
       gap: 0.4rem;
       transition: all 0.3s ease;
       opacity: 0;
+      max-width: 85vw;
     }
 
     body.started .music-badge {
       opacity: 1;
+    }
+
+    #music-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 140px;
     }
 
     .music-btn-action {
@@ -318,16 +326,17 @@
       font-weight: 800;
       cursor: pointer;
       transition: background 0.2s;
+      flex-shrink: 0;
     }
 
     .music-btn-action:hover, .music-btn-action:active {
       background: #ffd1dc;
     }
 
-    /* Grid & Cards Reveal */
+    /* Grid & Cards Reveal with Mini Photo Side Thumbnails */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1.2rem;
       width: 100%;
       max-width: 980px;
@@ -339,24 +348,56 @@
       background: var(--card-bg);
       backdrop-filter: blur(12px);
       border-radius: 22px;
-      padding: 1.5rem 1.3rem;
+      padding: 1.1rem 1.2rem;
       border: 1.5px solid rgba(255, 255, 255, 0.85);
       box-shadow: 0 10px 22px rgba(244, 180, 202, 0.18);
       transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.3s, box-shadow 0.3s, opacity 0.6s ease, filter 0.6s ease;
       cursor: pointer;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.9rem;
       min-height: 115px;
       opacity: 0;
       transform: translateY(30px);
       filter: blur(4px);
     }
 
+    .card-thumb-frame {
+      width: 60px;
+      height: 72px;
+      flex-shrink: 0;
+      background: #ffffff;
+      padding: 3px 3px 12px 3px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(216, 90, 138, 0.2);
+      transform: rotate(-3deg);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .card-thumb-frame {
+      transform: rotate(2deg) scale(1.05);
+    }
+
+    .card-thumb-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-grow: 1;
+      height: 100%;
+    }
+
     .card.last-centered-card {
       grid-column: 1 / -1;
       justify-self: center;
-      max-width: 360px;
+      max-width: 380px;
       width: 100%;
     }
 
@@ -375,18 +416,18 @@
 
     .card-title {
       font-family: var(--font-title);
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 500;
       color: #6d415b;
-      line-height: 1.4;
+      line-height: 1.35;
     }
 
     .card-footer {
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      margin-top: 0.9rem;
-      font-size: 0.82rem;
+      margin-top: 0.7rem;
+      font-size: 0.8rem;
       color: var(--accent-dark);
       font-weight: 700;
     }
@@ -751,13 +792,35 @@
     const openIntroBtn = document.getElementById('open-intro-btn');
     let isPlaying = false;
 
-    // 4 Song Playlist Configuration
-    const playlist = [
-      { name: "sunkissed", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/sunkissed.mp3" },
+    // 14 Songs Playlist Configuration
+    const basePlaylist = [
+      { name: "I Wanna Be Yours", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/Arctic%20Monkeys%20-%20I%20Wanna%20Be%20Yours.mp3" },
+      { name: "Blue - Chezile", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/Chezile%20-%20Blue.mp3" },
+      { name: "Cinnamon Girl", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/Cinnamon%20Girl.mp3" },
+      { name: "I Think They Call This Love", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/I%20Think%20They%20Call%20This%20Love.mp3" },
+      { name: "I'm Dreaming of You", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/I'm%20Dreaming%20of%20You.mp3" },
+      { name: "Say Yes To Heaven", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/Lana%20Del%20Rey%20-%20Say%20Yes%20To%20Heaven.mp3" },
+      { name: "The Night We Met", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/Lord%20Huron%20-%20The%20Night%20We%20Met.mp3" },
+      { name: "My Love Mine All Mine", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/Mitski%20-%20My%20Love%20Mine%20All%20Mine.mp3" },
+      { name: "Until I Found You", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/Stephen%20Sanchez%20-%20Until%20I%20Found%20You.mp3" },
+      { name: "blue - yung kai", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/yung%20kai%20-%20blue.mp3" },
+      { name: "seasons - wave to earth", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/wave%20to%20earth%20-%20seasons.mp3" },
       { name: "Those Eyes", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/Those%20Eyes.mp3" },
-      { name: "We Fall in Love", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/We%20Fall%20in%20Love.mp3" },
-      { name: "I'm Dreaming of You", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/I'm%20Dreaming%20of%20You.mp3" }
+      { name: "sunkissed", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/sunkissed.mp3" },
+      { name: "we fell in love in october", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/we%20fell%20in%20love%20in%20october.mp3" }
     ];
+
+    // Fisher-Yates Shuffle Algorithm to randomize the full playlist on every load
+    function shuffleArray(array) {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
+
+    const playlist = shuffleArray(basePlaylist);
     let currentTrack = 0;
 
     function loadTrack(index) {
@@ -778,7 +841,19 @@
     bgMusic.addEventListener('ended', playNextTrack);
     loadTrack(currentTrack);
 
-    // Create cards in DOM
+    // List of existing photos for card thumbnails
+    const cardPhotoUrls = [
+      "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/1.jpg",
+      "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/2.jpg",
+      "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/3.jpg",
+      "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/4.jpg",
+      "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/5.jpg",
+      "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/6.jpg",
+      "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/7.jpg",
+      "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/8.jpg"
+    ];
+
+    // Create cards in DOM with mini photo thumbnail
     cardsData.forEach((card, index) => {
       const cardEl = document.createElement('div');
       cardEl.className = 'card';
@@ -787,10 +862,17 @@
         cardEl.classList.add('last-centered-card');
       }
 
+      const photoUrl = cardPhotoUrls[index % cardPhotoUrls.length];
+
       cardEl.innerHTML = `
-        <div class="card-title">${card.title}</div>
-        <div class="card-footer">
-          <span>Read note 💌</span>
+        <div class="card-thumb-frame">
+          <img src="${photoUrl}" alt="Photo memory">
+        </div>
+        <div class="card-content">
+          <div class="card-title">${card.title}</div>
+          <div class="card-footer">
+            <span>Read note 💌</span>
+          </div>
         </div>
       `;
 
@@ -848,7 +930,7 @@
       sidePhotos.forEach((photo, index) => {
         setTimeout(() => {
           photo.classList.add('show-photo');
-        }, 250 + (index * 160)); // 1st photo, 2nd photo, 3rd photo sequence...
+        }, 250 + (index * 160));
       });
 
       // STEP 3: Envelope cards reveal AFTER photos finish flying out
