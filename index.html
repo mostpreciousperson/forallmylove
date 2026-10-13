@@ -159,7 +159,7 @@
       50% { transform: translateY(-8px); }
     }
 
-    /* --- FLOATING SIDE PHOTOS (CLOSE & PEEKING) --- */
+    /* --- FLOATING SIDE PHOTOS --- */
     .side-photo {
       position: absolute;
       width: 100px;
@@ -171,14 +171,16 @@
       z-index: 0;
       pointer-events: none;
       opacity: 0;
-      transition: opacity 1s ease;
+      transform: translateY(-20px) scale(0.9);
+      transition: opacity 0.8s ease, transform 0.8s ease;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    body.started .side-photo {
+    .side-photo.show-photo {
       opacity: 0.88;
+      transform: translateY(0) scale(1);
     }
 
     .side-photo img {
@@ -194,43 +196,33 @@
         width: 130px;
         height: 160px;
       }
-      .photo-1 { top: 120px; left: 2%; transform: rotate(-8deg); animation: floatSide1 6s infinite ease-in-out; }
-      .photo-2 { top: 450px; left: 2%; transform: rotate(6deg); animation: floatSide2 7s infinite ease-in-out; }
-      .photo-5 { top: 780px; left: 2%; transform: rotate(-5deg); animation: floatSide1 6.8s infinite ease-in-out; }
-      .photo-6 { top: 1110px; left: 2%; transform: rotate(7deg); animation: floatSide2 7.2s infinite ease-in-out; }
+      .photo-1 { top: 120px; left: 2%; transform: rotate(-8deg); }
+      .photo-2 { top: 600px; left: 2%; transform: rotate(6deg); }
+      .photo-5 { top: 1100px; left: 2%; transform: rotate(-5deg); }
+      .photo-6 { top: 1600px; left: 2%; transform: rotate(7deg); }
 
-      .photo-3 { top: 220px; right: 2%; transform: rotate(7deg); animation: floatSide2 6.5s infinite ease-in-out; }
-      .photo-4 { top: 550px; right: 2%; transform: rotate(-6deg); animation: floatSide1 7.5s infinite ease-in-out; }
-      .photo-7 { top: 880px; right: 2%; transform: rotate(5deg); animation: floatSide2 6.3s infinite ease-in-out; }
-      .photo-8 { top: 1210px; right: 2%; transform: rotate(-7deg); animation: floatSide1 7s infinite ease-in-out; }
+      .photo-3 { top: 220px; right: 2%; transform: rotate(7deg); }
+      .photo-4 { top: 700px; right: 2%; transform: rotate(-6deg); }
+      .photo-7 { top: 1200px; right: 2%; transform: rotate(5deg); }
+      .photo-8 { top: 1700px; right: 2%; transform: rotate(-7deg); }
     }
 
-    /* Mobile Phone Positions (Cozy, Close & Peeking Behind Cards) */
+    /* Mobile Phone Positions */
     @media (max-width: 1024px) {
       .side-photo {
-        width: 80px;
-        height: 100px;
+        width: 82px;
+        height: 102px;
         padding: 4px 4px 12px 4px;
       }
-      .photo-1 { top: 100px; left: 10px; transform: rotate(-10deg); animation: floatSide1 6s infinite ease-in-out; }
-      .photo-2 { top: 400px; left: 8px; transform: rotate(8deg); animation: floatSide2 7s infinite ease-in-out; }
-      .photo-5 { top: 700px; left: 10px; transform: rotate(-6deg); animation: floatSide1 6.8s infinite ease-in-out; }
-      .photo-6 { top: 1000px; left: 8px; transform: rotate(9deg); animation: floatSide2 7.2s infinite ease-in-out; }
+      .photo-1 { top: 110px; left: -8px; transform: rotate(-12deg); }
+      .photo-2 { top: 750px; left: -10px; transform: rotate(8deg); }
+      .photo-5 { top: 1400px; left: -8px; transform: rotate(-6deg); }
+      .photo-6 { top: 2050px; left: -6px; transform: rotate(10deg); }
 
-      .photo-3 { top: 250px; right: 10px; transform: rotate(10deg); animation: floatSide2 6.5s infinite ease-in-out; }
-      .photo-4 { top: 550px; right: 8px; transform: rotate(-8deg); animation: floatSide1 7.5s infinite ease-in-out; }
-      .photo-7 { top: 850px; right: 10px; transform: rotate(6deg); animation: floatSide2 6.3s infinite ease-in-out; }
-      .photo-8 { top: 1150px; right: 8px; transform: rotate(-9deg); animation: floatSide1 7s infinite ease-in-out; }
-    }
-
-    @keyframes floatSide1 {
-      0%, 100% { transform: translateY(0) rotate(-6deg); }
-      50% { transform: translateY(-8px) rotate(-3deg); }
-    }
-
-    @keyframes floatSide2 {
-      0%, 100% { transform: translateY(0) rotate(6deg); }
-      50% { transform: translateY(-10px) rotate(3deg); }
+      .photo-3 { top: 400px; right: -8px; transform: rotate(10deg); }
+      .photo-4 { top: 1050px; right: -10px; transform: rotate(-8deg); }
+      .photo-7 { top: 1700px; right: -8px; transform: rotate(6deg); }
+      .photo-8 { top: 2350px; right: -6px; transform: rotate(-10deg); }
     }
 
     /* Floating background hearts */
@@ -831,7 +823,7 @@
       container.appendChild(cardEl);
     });
 
-    // Opening Intro Animation + Massive 2-Second Heart Flood
+    // Opening Intro Animation: Photos FIRST one by one, then Cards SECOND
     openIntroBtn.addEventListener('click', (e) => {
       const rect = openIntroBtn.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
@@ -848,11 +840,21 @@
         musicIcon.textContent = "🎶";
       }).catch((err) => console.log("Audio playback error: ", err));
 
+      // 1st: Reveal side photos ONE BY ONE
+      const sidePhotos = document.querySelectorAll('.side-photo');
+      sidePhotos.forEach((photo, index) => {
+        setTimeout(() => {
+          photo.classList.add('show-photo');
+        }, 300 + (index * 160)); // Staggered photo drop in
+      });
+
+      // 2nd: Reveal envelope cards AFTER photos finish appearing
       const cards = document.querySelectorAll('.card');
+      const photoDuration = 300 + (sidePhotos.length * 160);
       cards.forEach((card, index) => {
         setTimeout(() => {
           card.classList.add('appear');
-        }, 200 + (index * 60));
+        }, photoDuration + (index * 55));
       });
     });
 
