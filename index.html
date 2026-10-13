@@ -3,16 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Open When... | Happy Birthday!</title>
+  <title>For My Favorite Person 💌</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;600;700&display=swap');
+
     :root {
-      --bg-gradient: linear-gradient(135deg, #fff5f7 0%, #fed6e3 50%, #f3d1f4 100%);
-      --card-bg: rgba(255, 255, 255, 0.75);
-      --accent-color: #ff7b9c;
-      --accent-hover: #ff527b;
-      --text-main: #4a3e4e;
-      --text-muted: #8c7a92;
-      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      --bg-gradient: linear-gradient(135deg, #fff0f3 0%, #ffe3e8 40%, #f7d6e0 70%, #f2c6de 100%);
+      --card-bg: rgba(255, 255, 255, 0.65);
+      --card-hover: rgba(255, 255, 255, 0.85);
+      --accent-color: #ff9ebb;
+      --accent-dark: #e86a92;
+      --text-main: #6b5262;
+      --text-muted: #a38599;
+      --font-title: 'Fredoka', cursive, sans-serif;
+      --font-body: 'Nunito', sans-serif;
     }
 
     * {
@@ -22,87 +26,140 @@
     }
 
     body {
-      font-family: var(--font-family);
+      font-family: var(--font-body);
       background: var(--bg-gradient);
       background-attachment: fixed;
       color: var(--text-main);
       min-height: 100vh;
-      padding: 2rem 1rem;
+      padding: 2.5rem 1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
+      overflow-x: hidden;
+    }
+
+    /* Soft floating background hearts */
+    .bg-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-heart {
+      position: absolute;
+      color: rgba(255, 182, 193, 0.35);
+      font-size: 1.5rem;
+      animation: floatUp 12s infinite linear;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+      20% { opacity: 0.6; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
     }
 
     header {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      z-index: 1;
     }
 
     header h1 {
-      font-size: 2.5rem;
-      color: #d63384;
-      margin-bottom: 0.5rem;
-      text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+      font-family: var(--font-title);
+      font-size: 2.6rem;
+      color: #d85a8a;
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.5px;
+      text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.9);
     }
 
     header p {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Floating Music Indicator */
+    .music-badge {
+      position: fixed;
+      bottom: 1.2rem;
+      right: 1.2rem;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      padding: 0.6rem 1.1rem;
+      border-radius: 30px;
+      box-shadow: 0 6px 18px rgba(232, 106, 146, 0.18);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .music-badge:hover {
+      transform: scale(1.05);
+      background: #ffffff;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.4rem;
       width: 100%;
-      max-width: 1200px;
+      max-width: 1100px;
+      position: relative;
+      z-index: 1;
     }
 
     .card {
       background: var(--card-bg);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 8px 20px rgba(244, 180, 202, 0.25);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 1.6rem 1.4rem;
+      border: 1.5px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 10px 25px rgba(244, 180, 202, 0.2);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       cursor: pointer;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      position: relative;
-      overflow: hidden;
+      min-height: 120px;
     }
 
     .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 25px rgba(244, 180, 202, 0.4);
-    }
-
-    .card-category {
-      font-size: 0.8rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #b15b87;
-      margin-bottom: 0.5rem;
+      transform: translateY(-6px) scale(1.02);
+      background: var(--card-hover);
+      box-shadow: 0 15px 30px rgba(232, 106, 146, 0.25);
+      border-color: rgba(255, 255, 255, 1);
     }
 
     .card-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #632c49;
-      margin-bottom: 1rem;
+      font-family: var(--font-title);
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: #6d415b;
+      line-height: 1.4;
     }
 
     .card-footer {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
       margin-top: 1rem;
-      font-size: 0.9rem;
-      color: var(--accent-color);
-      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--accent-dark);
+      font-weight: 700;
     }
 
     /* Modal Styling */
@@ -112,16 +169,16 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(5px);
+      background: rgba(232, 106, 146, 0.2);
+      backdrop-filter: blur(8px);
       display: flex;
       justify-content: center;
       align-items: center;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.35s ease;
       z-index: 1000;
-      padding: 1rem;
+      padding: 1.2rem;
     }
 
     .modal-overlay.active {
@@ -130,17 +187,18 @@
     }
 
     .modal {
-      background: #ffffff;
-      border-radius: 24px;
-      max-width: 550px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 28px;
+      max-width: 500px;
       width: 100%;
-      max-height: 85vh;
+      max-height: 80vh;
       overflow-y: auto;
-      padding: 2rem;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      padding: 2.2rem 1.8rem;
+      box-shadow: 0 20px 45px rgba(216, 90, 138, 0.22);
       position: relative;
-      transform: scale(0.9);
-      transition: transform 0.3s ease;
+      transform: scale(0.85);
+      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 2px solid #fff;
     }
 
     .modal-overlay.active .modal {
@@ -149,48 +207,78 @@
 
     .close-btn {
       position: absolute;
-      top: 1.2rem;
-      right: 1.2rem;
-      background: #f0f0f0;
+      top: 1rem;
+      right: 1rem;
+      background: #ffe3e8;
       border: none;
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       cursor: pointer;
-      font-size: 1.1rem;
-      color: #666;
+      font-size: 1rem;
+      color: var(--accent-dark);
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: background 0.2s ease;
+    }
+
+    .close-btn:hover {
+      background: #ffd1dc;
     }
 
     .modal-title {
-      font-size: 1.4rem;
-      color: #d63384;
-      margin-bottom: 1rem;
+      font-family: var(--font-title);
+      font-size: 1.3rem;
+      color: #d85a8a;
+      margin-bottom: 1.2rem;
       padding-right: 2rem;
+      line-height: 1.3;
     }
 
     .modal-body {
       font-size: 1rem;
-      line-height: 1.7;
-      color: #444;
+      line-height: 1.75;
+      color: #5c4554;
       white-space: pre-wrap;
+      font-weight: 500;
     }
 
     footer {
-      margin-top: 3rem;
+      margin-top: 3.5rem;
       color: var(--text-muted);
       font-size: 0.9rem;
+      font-weight: 600;
       text-align: center;
+      position: relative;
+      z-index: 1;
     }
   </style>
 </head>
 <body>
 
+  <!-- Background Floating Hearts -->
+  <div class="bg-hearts">
+    <div class="bg-heart" style="left: 10%; animation-delay: 0s;">🌸</div>
+    <div class="bg-heart" style="left: 25%; animation-delay: 3s;">✨</div>
+    <div class="bg-heart" style="left: 45%; animation-delay: 1s;">💖</div>
+    <div class="bg-heart" style="left: 70%; animation-delay: 5s;">🌸</div>
+    <div class="bg-heart" style="left: 85%; animation-delay: 2s;">✨</div>
+  </div>
+
+  <!-- Background Music Audio -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="https://ia801503.us.archive.org/15/items/khai-dreams-sunkissed/khai%20dreams%20-%20sunkissed.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Music Status Badge -->
+  <div class="music-badge" id="music-btn">
+    <span id="music-icon">🎵</span> <span id="music-text">sunkissed ~ khai dreams</span>
+  </div>
+
   <header>
     <h1>💌 Open When...</h1>
-    <p>For my most special person. Click on any envelope whenever you need it!</p>
+    <p>Click on any envelope whenever you need a soft warm hug ~</p>
   </header>
 
   <main class="grid" id="cards-container"></main>
@@ -204,148 +292,120 @@
   </div>
 
   <footer>
-    Made with 💕 just for you
+    Made with all my love, just for you 💕
   </footer>
 
   <script>
     const cardsData = [
       {
-        category: "💖 Warm, Soft & Reassuring",
         title: "1. Open when... you miss me",
         message: "Hey love,\n\nIf you’re opening this, I’m guessing the distance is making things feel a little quiet today. I wish I could go next to you, whisper in your ear, and tell you everything is going to be okay. Close your eyes for a second, breathe, please know that I love you so, so much. I miss you so much more and please know that we would be coming back to each other always, hm? I miss you so much! We would be making it up to each other, promise. Puppy got you~"
       },
       {
-        category: "💖 Warm, Soft & Reassuring",
         title: "2. Open when... you’re having a tough or exhausting day",
         message: "Take a deep breath and drop your shoulders for me. You’ve been holding so much tension today, haven’t you?\n\nI know today was heavy, but you made it through. I’m so so so so proud of how hard you try every single day. You don’t have to be strong right now, my dearest. Just rest. Wrap yourself in a soft blanket, get comfortable, and let puppy hold space for you. You are loved, you are safe, and tomorrow is a fresh start. You’re doing so good, angel."
       },
       {
-        category: "💖 Warm, Soft & Reassuring",
         title: "3. Open when... the distance feels too heavy today",
         message: "I know. Some days feel like too much, and all you want is to just reach out and touch puppy close. I feel it too.\n\nBut remember this, distance only measures certain space, not how close our hearts are. Every single day that passes is one day closer to the moment I get to wrap my arms around you and never let go. Hang in there with me, okay? We are building something beautiful together. We would be okay, angel baby."
       },
       {
-        category: "💖 Warm, Soft & Reassuring",
         title: "4. Open when... you can't sleep and it’s late at night",
         message: "Hey sleepyhead, why are you still awake? Come snuggle back to pupppyyyy!\n\nPut your phone down after reading this, close your eyes, and think about us sitting under a quiet night sky with no noise around us. Imagine my hand softly stroking your hair until you drift off. Just warm warm hugs and pets coming onto your way. You can breathe, let go of all the thoughts running through your mind. I’ll be right here, things will be alright, precious. Take care and rest well, my treasure."
       },
       {
-        category: "💖 Warm, Soft & Reassuring",
         title: "5. Open when... you feel overwhelmed by work or anything",
         message: "Pause everything for just one minute. Stretch your arms, drink a glass of water, and unclench your jaw.\n\nYou are working so hard, but please remember that your productivity does not define your worth. You are so smart, talented, and capable, but you are also human. Take things one single step at a time. I believe in you more than anyone else in the world, but I also care about your peace. Breathe, precious love. You got this! Fighting!"
       },
       {
-        category: "💖 Warm, Soft & Reassuring",
         title: "6. Open when... you’re feeling insecure or doubting yourself",
         message: "Stop right there! If your brain is telling you mean things about yourself today, I need you to listen to me instead.\n\nTo me, you are the most beautiful, breathtaking, and incredible person in existence. You have survived so much of things and and and I wish things could help out give you strength to believe. You have a pure heart and you as a whole that lights up my entire world. With sweetheart who has personality that makes puppy fall in love with every single day. Please don’t let temporary doubts hide how precious you truly are. You are loved beyond measure, valuable just as you are. You are so so so so loved!"
       },
       {
-        category: "💖 Warm, Soft & Reassuring",
         title: "7. Open when... you need a warm, tight hug right now",
         message: "Puppy extending arms as wide as possible, huuuuug!\n\nSqueeze your eyes shut and wrap your arms around yourself tight, that’s a warm, giant hug straight from puppy to you! Hold it for 5 seconds. I wish I could pull you so tight into my chest and hold you until you feel safe, but until I can, please accept this virtual hug. Consider yourself squeezed! Come to puppy for more hugs!"
       },
       {
-        category: "💖 Warm, Soft & Reassuring",
         title: "8. Open when... you’re sick or not feeling well",
         message: "Oh no, my poor sweet love... I hate so much that I’m not there to bring you warm soup, hand you medicine, and tuck you into bed.\n\nPlease promise me you’ll rest today. Drink plenty of water, sip some warm tea, and don't push yourself to do anything stressful. Lie down, put on your favorite comfy show, and let yourself heal. Sending you all my warmth and healing energy!"
       },
       {
-        category: "💖 Warm, Soft & Reassuring",
         title: "9. Open when... you wonder how much I actually love you",
         message: "If you ever wonder about this, the answer is: way more than words could ever express. I love love love love youuuuuuu soooo much, please believe that.\n\nI love you more than the ocean has water, more than the night sky has stars, and more than I love my absolute favorite things in the world. You aren't just a part of my life, my sweetheart has become my favorite part of every single day. My love for you is constant, unwavering, and endlessly growing. You are so so so so so loved!"
       },
       {
-        category: "💖 Warm, Soft & Reassuring",
         title: "10. Open when... you feel lonely even when surrounded by people",
         message: "It’s okay to feel like that sometimes. Loneliness doesn't mean you are truly alone, it just means your heart is missing its favorite place, or a familiar one.\n\nWhenever you feel out of place or invisible, remember that across the distance, there is someone whose entire world revolves around you. I am always thinking of you, cheering for you, and carrying you in my heart everywhere I go. You are never truly alone. Puppy got you always, dear heart. You always got yourself toooo, angel baby."
       },
       {
-        category: "🎉 Sweet, Happy & Celebratory",
         title: "11. Open when... you had an amazing day and want to celebrate!",
         message: "YESSS! 🎉 I am smiling so big right now just reading this!\n\nI am so happy that today was wonderful for you! Tell me every single detail! What made you smile today? What made your heart happy? Go treat yourself to something sweet or fun right now because you deserve all the joy in the world. I'm doing a happy dance for you over here! Woof woof!"
       },
       {
-        category: "🎉 Sweet, Happy & Celebratory",
         title: "12. Open when... you achieved something you’re really proud of",
         message: "CONGRATULATIONS MY LOVE!! 🌟✨\n\nI always knew you could do it! You work so hard and put your whole heart into everything, so seeing you succeed fills me with so much pride. Take a moment to stand tall and celebrate yourself. You earned this moment 100%. I am your biggest fan, today and every day!"
       },
       {
-        category: "🎉 Sweet, Happy & Celebratory",
         title: "13. Open when... it’s midnight on your birthday!",
         message: "HAPPY BIRTHDAY TO THE MOST SPECIAL PERSON IN MY LIFE! 🎂🥳🎈\n\nThe clock just struck October 14th, and the world became a much brighter place the day you were born. I am so thankful to have you in my life and to celebrate another year of your existence. Make a wish, blow out your virtual candles, and know that I am wishing for all your dreams to come true. YOU ARE SOOOO LOVED!!!!!!!!"
       },
       {
-        category: "🎉 Sweet, Happy & Celebratory",
         title: "14. Open when... you’re wearing an outfit that makes you feel super pretty",
         message: "Okay, wait... you can’t just dress up like that and not show me! 📸\n\nYou look absolutely stunning, don't you? (Even without seeing it yet, I already know you look like an absolute angel). Take a picture or look in the mirror right now and admire how gorgeous you are. You deserve to feel confident and pretty every single day! YOU ARE SO SO SO SO BEAUTIFUL GENUINELYYYYYYYYYYY!!!"
       },
       {
-        category: "🎉 Sweet, Happy & Celebratory",
         title: "15. Open when... you bought yourself a treat or something nice",
         message: "YAY!!! You deserve to spoil yourself so much angel!!!!!!!!! 🛍️✨\n\nI am so glad you treated yourself today. You deserve to enjoy nice things without feeling guilty about it. Whatever it is, a delicious drink, a cute outfit, or a little hobby item or anything, I hope it brings a huge smile to your face today!"
       },
       {
-        category: "🎉 Sweet, Happy & Celebratory",
         title: "16. Open when... you need a quick sudden boost of happiness",
         message: "Quick! Here are 3 facts to instantly boost your mood:\n1. Otters hold hands while sleeping so they don't float away.\n2. Pufferfish make crop-circle-like patterns on the seafloor just to impress their partners.\n3. Somewhere across the world, I am currently madly in love with you and thinking about how precious you are. And yes a puppy waiting for you to come home~\n\nNow give me a big smile! 😊SMOOOOOOOOOOCH!!!! SUDDEN KISS!!!!!!!"
       },
       {
-        category: "☕ Casual, Daily & Cozies",
         title: "17. Open when... you’re drinking your morning coffee or tea",
         message: "Good morning, beautiful!!!!!!!!!!!!!\n\nAs you take your first warm sip today, I hope your morning is gentle, peaceful, and filled with good energy. Have a lovely morning! Goodluck today sweetheart~"
       },
       {
-        category: "☕ Casual, Daily & Cozies",
         title: "18. Open when... you’re taking a break and having lunch",
         message: "Bon Appétit! 🥪✨\n\nI hope you’re eating something tasty and nourishing right now! Please make sure you take a proper break, don't rush through your food or stress about work while eating. Enjoy your lunch, rest your brain for a bit, and recharge your energy!"
       },
       {
-        category: "☕ Casual, Daily & Cozies",
         title: "19. Open when... you just got home and finally sat down",
         message: "Welcome home! 🏠 Kick off your shoes, change into your coziest clothes, and sink into your favorite spot.\n\nThe day's work is done, and now it’s time for you to relax. Let go of everything that happened today and just enjoy the quiet evening ahead. You did great today!"
       },
       {
-        category: "☕ Casual, Daily & Cozies",
         title: "20. Open when... you’re about to go to sleep",
         message: "Sweet dreams, my sweetheart. 🌙✨\n\nPull the covers up close, get warm, and let all the thoughts of the day fade away. I’ll be here to give you Sleep peacefully and softly tonight."
       },
       {
-        category: "☕ Casual, Daily & Cozies",
         title: "21. Open when... you’re listening to music and thinking of us",
         message: "What song are you listening to right now? 🎶\n\nWhenever I hear romantic songs or cozy melodies, my mind immediately drifts to you. Music always feels sweeter when I connect it to your memory. Put on our favorite song, turn the volume up, and know that I’m listening to it with you in spirit."
       },
       {
-        category: "☕ Casual, Daily & Cozies",
         title: "22. Open when... you need a silly joke or something cute to smile at",
         message: "Why did the cute little panda get lost? Because it took the bear-y wrong turn! 🐼\n\nOkay, okay, maybe that was cheesy, but if it brought even a tiny smirk to your face, then my mission is accomplished! Sending you endless soooft vibes today! And oh! I love you bery much!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
       },
       {
-        category: "💌 Romantic & Deep Appreciation",
         title: "23. Open when... you want to hear 10 specific things I adore about you",
         message: "Here are 10 tiny things that make me love you more every day:\n1. Your precious voice that makes me just smile so much.\n2. Your warm, gentle heart.\n3. Your soft laugh.\n4. How caring you are toward people around you.\n5. Your cute habits and expressions.\n6. How smart and passionate you get when you talk about things you love.\n7. The comfort I feel whenever I talk to you.\n8. Your adorable sense of style.\n9. The way you make me want to be a better person.\n10. Simply existing as you."
       },
       {
-        category: "💌 Romantic & Deep Appreciation",
         title: "24. Open when... you wonder what my favorite memory of us is",
         message: "I have so many favorite memories with you, but my absolute favorite is every single time we stay up late just talking about nothing and everything all at once. Those quiet moments where time stops, and it feels like it's just you and me in our own little universe, that is where I feel happiest. I wish we could always spend more time together, baby. Looking forward always! And being with you would always be my most favorite too!"
       },
       {
-        category: "💌 Romantic & Deep Appreciation",
         title: "25. Open when... you’re wearing soft sweater or piece of clothes",
         message: "You look so cozy and cute right now, don't you? 🧥✨\n\nSeeing you in soft, comfortable clothes is really really good. Wrap yourself up tight in it and treat it like a long, warm hug from me! YOUUUU WOULD ALWAYS BE SOOOO ADORABLE IN MY EYES!!! I hope you feel warm today!"
       },
       {
-        category: "💌 Romantic & Deep Appreciation",
         title: "26. Open when... you want to know what I’m probably doing right at this exact second",
         message: "Right now? 99% chance I am doing one of these things:\n- Thinking about you.\n- Checking my phone to see if you messaged.\n- Missing you so much!\n- Thinking of how I can jump of you when you get back."
       },
       {
-        category: "💌 Romantic & Deep Appreciation",
         title: "27. Open when... you feel like reading a sweet long letter from me",
         message: "My sweetest angel beloved,\n\nI wanted to write this letter to remind you of how deeply cherished you are. Meeting you changed my world in ways I can't even describe. You brought light, warmth, and so much color into my life. Thank you for being my favorite companion, my safe haven, my hyung, my alpha and my best friend. Never forget how loved you are."
       },
       {
-        category: "💌 Romantic & Deep Appreciation",
         title: "28. Open when... you’ve opened all the other envelopes and want one final secret note",
         message: "You made it to the very last envelope! 💌\n\nEven if you’ve read all cards, remember that my love for you never runs out. This website and these notes are just a small reflection of how much you mean to me. I love you endlessly, yesterday, today, and for all the tomorrows to come. Happy Birthday! ❤️"
       }
@@ -356,17 +416,44 @@
     const closeBtn = document.getElementById('close-btn');
     const modalTitle = document.getElementById('modal-title');
     const modalBody = document.getElementById('modal-body');
+    const bgMusic = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-btn');
+    const musicIcon = document.getElementById('music-icon');
+    let isPlaying = false;
 
-    cardsData.forEach((card, index) => {
+    // Start music on first click anywhere on page
+    function startAudioOnInteraction() {
+      if (!isPlaying) {
+        bgMusic.play().then(() => {
+          isPlaying = true;
+          musicIcon.textContent = "🎶";
+        }).catch(() => {});
+      }
+      document.removeEventListener('click', startAudioOnInteraction);
+    }
+    document.addEventListener('click', startAudioOnInteraction);
+
+    // Toggle Music manually via badge
+    musicBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isPlaying) {
+        bgMusic.pause();
+        musicIcon.textContent = "⏸️";
+      } else {
+        bgMusic.play();
+        musicIcon.textContent = "🎶";
+      }
+      isPlaying = !isPlaying;
+    });
+
+    // Generate Envelope Cards
+    cardsData.forEach((card) => {
       const cardEl = document.createElement('div');
       cardEl.className = 'card';
       cardEl.innerHTML = `
-        <div>
-          <div class="card-category">${card.category}</div>
-          <div class="card-title">${card.title}</div>
-        </div>
+        <div class="card-title">${card.title}</div>
         <div class="card-footer">
-          <span>Click to open ✉️</span>
+          <span>Read note 💌</span>
         </div>
       `;
 
