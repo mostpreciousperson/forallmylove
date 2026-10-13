@@ -373,19 +373,20 @@
     <div class="bg-heart" style="left: 85%; animation-delay: 2s;">✨</div>
   </div>
 
-  <!-- Background Music Audio -->
+  <!-- Direct raw Github link for sunkissed.mp3 -->
   <audio id="bg-music" loop preload="auto">
-    <source src="https://ia801503.us.archive.org/15/items/khai-dreams-sunkissed/khai%20dreams%20-%20sunkissed.mp3" type="audio/mpeg">
+    <source src="https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/sunkissed.mp3" type="audio/mpeg">
+    <source src="sunkissed.mp3" type="audio/mpeg">
   </audio>
 
   <!-- Music Status Badge -->
   <div class="music-badge" id="music-btn">
-    <span id="music-icon">🎶</span> <span id="music-text">sunkissed ~ khai dreams</span>
+    <span id="music-icon">🎶</span> <span id="music-text">sunkissed</span>
   </div>
 
   <header>
     <h1>💌 Open When...</h1>
-    <p>Click on any envelope whenever you need a soft warm hug ~</p>
+    <p>Click on any envelope, my love!</p>
   </header>
 
   <main class="grid" id="cards-container"></main>
@@ -417,7 +418,7 @@
         message: "I know. Some days feel like too much, and all you want is to just reach out and touch puppy close. I feel it too.\n\nBut remember this, distance only measures certain space, not how close our hearts are. Every single day that passes is one day closer to the moment I get to wrap my arms around you and never let go. Hang in there with me, okay? We are building something beautiful together. We would be okay, angel baby."
       },
       {
-        title: "4. Open when... you can'sleep and it’s late at night",
+        title: "4. Open when... you can't sleep and it’s late at night",
         message: "Hey sleepyhead, why are you still awake? Come snuggle back to pupppyyyy!\n\nPut your phone down after reading this, close your eyes, and think about us sitting under a quiet night sky with no noise around us. Imagine my hand softly stroking your hair until you drift off. Just warm warm hugs and pets coming onto your way. You can breathe, let go of all the thoughts running through your mind. I’ll be right here, things will be alright, precious. Take care and rest well, my treasure."
       },
       {
@@ -555,18 +556,18 @@
       introOverlay.classList.add('hidden');
       document.body.classList.add('started');
 
-      // Play music
+      // Play music directly from raw github link
       bgMusic.play().then(() => {
         isPlaying = true;
         musicIcon.textContent = "🎶";
-      }).catch(() => {});
+      }).catch((e) => console.log("Audio playback error: ", e));
 
       // Slowly reveal cards one by one
       const cards = document.querySelectorAll('.card');
       cards.forEach((card, index) => {
         setTimeout(() => {
           card.classList.add('appear');
-        }, 300 + (index * 70)); // staggered delay per card
+        }, 300 + (index * 70));
       });
     });
 
