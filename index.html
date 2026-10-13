@@ -677,7 +677,7 @@
         message: "I know. Some days feel like too much, and all you want is to just reach out and touch puppy close. I feel it too.\n\nBut remember this, distance only measures certain space, not how close our hearts are. Every single day that passes is one day closer to the moment I get to wrap my arms around you and never let go. Hang in there with me, okay? We are building something beautiful together. We would be okay, angel baby."
       },
       {
-        title: "Open when... you can't sleep and it’s late at night",
+        title: "Open when... you can'sleep and it’s late at night",
         message: "Hey sleepyhead, why are you still awake? Come snuggle back to pupppyyyy!\n\nPut your phone down after reading this, close your eyes, and think about us sitting under a quiet night sky with no noise around us. Imagine my hand softly stroking your hair until you drift off. Just warm warm hugs and pets coming onto your way. You can breathe, let go of all the thoughts running through your mind. I’ll be right here, things will be alright, precious. Take care and rest well, my treasure."
       },
       {
@@ -810,7 +810,7 @@
       { name: "we fell in love in october", src: "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/we%20fell%20in%20love%20in%20october.mp3" }
     ];
 
-    // Fisher-Yates Shuffle Algorithm to randomize the full playlist on every load
+    // Fisher-Yates Shuffle Algorithm
     function shuffleArray(array) {
       const shuffled = [...array];
       for (let i = shuffled.length - 1; i > 0; i--) {
@@ -841,19 +841,10 @@
     bgMusic.addEventListener('ended', playNextTrack);
     loadTrack(currentTrack);
 
-    // List of existing photos for card thumbnails
-    const cardPhotoUrls = [
-      "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/1.jpg",
-      "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/2.jpg",
-      "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/3.jpg",
-      "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/4.jpg",
-      "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/5.jpg",
-      "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/6.jpg",
-      "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/7.jpg",
-      "https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/8.jpg"
-    ];
+    // Array of all 28 uploaded photo URLs corresponding to 1.jpg through 28.jpg
+    const cardPhotoUrls = Array.from({ length: 28 }, (_, i) => `https://raw.githubusercontent.com/mostpreciousperson/forallmylove/main/${i + 1}.jpg`);
 
-    // Create cards in DOM with mini photo thumbnail
+    // Create cards in DOM with matching photo thumbnail
     cardsData.forEach((card, index) => {
       const cardEl = document.createElement('div');
       cardEl.className = 'card';
@@ -862,11 +853,11 @@
         cardEl.classList.add('last-centered-card');
       }
 
-      const photoUrl = cardPhotoUrls[index % cardPhotoUrls.length];
+      const photoUrl = cardPhotoUrls[index];
 
       cardEl.innerHTML = `
         <div class="card-thumb-frame">
-          <img src="${photoUrl}" alt="Photo memory">
+          <img src="${photoUrl}" alt="Photo memory ${index + 1}">
         </div>
         <div class="card-content">
           <div class="card-title">${card.title}</div>
